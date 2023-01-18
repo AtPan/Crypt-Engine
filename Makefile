@@ -1,9 +1,10 @@
 SHELL := /usr/bin/zsh
 
 CC := gcc
-CFLAGS := -std=c99 -I./include -fPIC -c -nostdlib
+CFLAGS := -std=c99 -I ./include/ ./include/Crypt_utils/ -fPIC -c
 CFLAGS_RELEASE := -O2
 CFLAGS_DEBUG := -O0 -g2 -fsanitize=leak -fstack-protector-all -Wall -D__DEBUG__
+CFLAGS_LIBS :=
 
 SRC := ./src
 BIN := ./bin
@@ -25,10 +26,10 @@ all: $(DIRECTORIES)
 
 .SECONDEXPANSION:
 $(DIRECTORIES): $$(filter $(SRC)/$$@/%.o, $(TARGETS_OBJS))
-	$(CC) -shared -o $(BIN)/lib$@.so $^ $(SDL_FLAGS)
+	$(CC) -shared -o $(BIN)/lib$@.so $^ $(CFLAGS_LIBS) $(SDL_FLAGS)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -o $@ $^ $(SDL_FLAGS)
+	$(CC) $(CFLAGS) -o $@ $^ $(CFLAGS_LIBS) $(SDL_FLAGS)
 
 clean:
 	@for obj_file in $(TARGETS_OBJS) ; do \
