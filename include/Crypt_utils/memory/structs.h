@@ -35,12 +35,13 @@ struct __memory {
 /* Structure used to represent a block of allocated memory.
  * Returned by Crypt_alloc.
  *
- * Allocated: Number of bytes allocated to this block, not including the 'allocated' and 'next' fields.
+ * Block Size: Number of bytes allocated to this block, not including the size of the structure.
+ * Is Allocated: If this block is reserved or free.
  * Next: Pointer to the next block, or NULL if there is no next block.
- * Mem: The memory itself.
  */
 struct __memory_block {
-    size_t allocated;
+    size_t block_size;
+    bool_t is_allocated;
     struct __memory_block * next;
 };
 
