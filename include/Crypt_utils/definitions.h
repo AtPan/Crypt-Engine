@@ -21,4 +21,9 @@ typedef enum __FLAG {
     SUCCESS,
 } FLAG;
 
+typedef enum __BOOL {
+    FALSE = 0,
+    TRUE = 1,
+} bool_t;
+
 #endif
