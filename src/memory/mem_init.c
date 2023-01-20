@@ -13,7 +13,6 @@
  */
 
 #include <Crypt_utils/memory.h>
-#include <Crypt_utils/memory/structs.h>
 #include <stdlib.h>
 
 struct __memory __memory_buf;
@@ -36,13 +35,10 @@ FLAG Crypt_init_memory(size_t n) {
     }
 
     __memory_buf.allocated = n;
-
-    for(struct __memory_block * block = (struct __memory_block *) __memory_buf.buf;
-            block != NULL && (size_t)block < (size_t)__memory_buf.buf + __memory_buf.allocated;
-            block = block->next) {
-        block->allocated = __CRYPT_DEFAULT_BLOCK_SIZE;
-        block->next = (struct __memory_block *)((size_t)block + block->allocated + sizeof(struct __memory_block));
-    }
+    struct __memory_block * head = (struct __memory_block *)__memory_buf.buf;
+    head->block_size = n;
+    head->is_allocated = FALSE;
+    head->next = NULL;
 
     return SUCCESS;
 }
