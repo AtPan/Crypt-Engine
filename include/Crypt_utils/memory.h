@@ -18,7 +18,6 @@
 
 #include <stddef.h>
 #include "definitions.h"
-#include "memory/structs.h"
 
 #define __CRYPT_DEFAULT_BLOCK_SIZE 128
 #define __CRYPT_DEFAULT_MEMORY_ALLOCATION 1 << 8
@@ -28,5 +27,6 @@
 
 FLAG Crypt_init_memory(size_t);
 void * Crypt_alloc(size_t);
+void Crypt_free(void *);
 
 #endif
