@@ -3,3 +3,4 @@ license_notice
 linked_command.txt
 main
 main.c
+*.o
