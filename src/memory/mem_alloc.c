@@ -32,7 +32,7 @@ void * Crypt_alloc(size_t n) {
 
     struct __memory_block * block = (struct __memory_block *)__memory_buf.buf;
 
-    while(block != NULL && block->block_size < n) {
+    while(block != NULL && (block->is_allocated == TRUE || block->block_size < n)) {
         block = block->next;
     }
 
@@ -49,6 +49,8 @@ void * Crypt_alloc(size_t n) {
         block->block_size = n;
         block->next = new_block;
     }
+
+    __memory_buf.size += n;
 
     return (void *)((size_t)block + sizeof(struct __memory_block));
 }
