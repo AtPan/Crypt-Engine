@@ -28,5 +28,6 @@
 FLAG Crypt_init_memory(size_t);
 void * Crypt_alloc(size_t);
 void Crypt_free(void *);
+void Crypt_defrag_memory(void);
 
 #endif
