@@ -13,6 +13,7 @@
  */
 
 #include <Crypt_utils/memory.h>
+#include <Crypt_utils/memory/structs.h>
 #include <stdlib.h>
 
 struct __memory __memory_buf;
