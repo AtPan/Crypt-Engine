@@ -18,13 +18,13 @@
 extern struct __memory __memory_buf;
 
 void Crypt_free(void *ptr) {
-    size_t addr = (size_t)ptr;
+    intptr_t addr = (intptr_t)ptr;
     struct __memory_block * block = (struct __memory_block *)__memory_buf.buf;
     struct __memory_block * parent = block;
 
-    if(addr < (size_t)__memory_buf.buf || addr > (size_t)__memory_buf.buf + __memory_buf.allocated) return;
+    if(addr < (intptr_t)__memory_buf.buf || addr > (intptr_t)__memory_buf.buf + __memory_buf.allocated) return;
 
-    while(block != NULL && addr > (size_t)block) {
+    while(block != NULL && addr > (intptr_t)block) {
         parent = block;
         block = block->next;
     }

@@ -53,7 +53,7 @@ void * __Crypt_mem_alloc_helper(size_t n) {
     block->is_allocated = TRUE;
 
     if(block->block_size != n) {
-        struct __memory_block * new_block = (struct __memory_block *)((size_t)block + n);
+        struct __memory_block * new_block = (struct __memory_block *)((intptr_t)block + n);
         new_block->is_allocated = FALSE;
         new_block->block_size = block->block_size - n;
         new_block->next = block->next;
@@ -64,5 +64,5 @@ void * __Crypt_mem_alloc_helper(size_t n) {
 
     __memory_buf.size += n;
 
-    return (void *)((size_t)block + sizeof(struct __memory_block));
+    return (void *)((intptr_t)block + sizeof(struct __memory_block));
 }
