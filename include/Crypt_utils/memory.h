@@ -17,17 +17,19 @@
 #define __CRYPT_MEMORY_H
 
 #include <stddef.h>
+#include <stdint.h>
 #include "definitions.h"
 
 #define __CRYPT_DEFAULT_BLOCK_SIZE 128
 #define __CRYPT_DEFAULT_MEMORY_ALLOCATION 1 << 8
-#define __CRYPT_ROUND_TO_NEXT_BLOCK(x) ((x) + (sizeof(struct __memory_block) - ((size_t)(x) % sizeof(struct __memory_block))) % sizeof(struct __memory_block))
-#define __CRYPT_POINTER_AS_INT(x) (size_t)(x)
+#define __CRYPT_ROUND_TO_NEXT_BLOCK(x) ((x) + __CRYPT_DEFAULT_BLOCK_SIZE - ((intptr_t)(x) % __CRYPT_DEFAULT_BLOCK_SIZE) % __CRYPT_DEFAULT_BLOCK_SIZE)
+#define __CRYPT_POINTER_AS_INT(x) (intptr_t)(x)
 #define __CRYPT_INT_AS_POINTER(x, type) (type *)(x)
 
 FLAG Crypt_init_memory(size_t);
 void * Crypt_alloc(size_t);
 void Crypt_free(void *);
 void Crypt_defrag_memory(void);
+void * Crypt_realloc(void *, size_t);
 
 #endif
