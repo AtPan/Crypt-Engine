@@ -15,7 +15,6 @@
 #include <Crypt_utils/memory.h>
 #include <Crypt_utils/memory/structs.h>
 #include <string.h>
-#include <stdio.h>
 
 extern struct __memory __memory_buf;
 
@@ -63,6 +62,8 @@ void * Crypt_realloc(void * old_ptr, size_t n) {
         old_block->is_allocated = FALSE;
         return NULL;
     }
+
+    __memory_buf.size += n - old_block->block_size;
 
     /* If the same size should be allocated, do nothing */
     if(old_block->block_size == n) return old_ptr;
