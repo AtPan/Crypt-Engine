@@ -19,6 +19,25 @@
 
 extern struct __memory __memory_buf;
 
+/* Crypt_realloc
+ * -----------------------------------------------
+ * Attempts to resize a pointer to a given size.
+ * The passed pointer must be a pointer returned by Crypt_alloc or from a previous
+ * call to Crypt_realloc.
+ *
+ * If NULL is passed, a new buffer of size n is allocated.
+ * If the requested size is 0, NULL is returned.
+ *
+ * The returned pointer is not guaranteed to be the same as old_ptr.
+ * Realloc will attempt to resize in place, but if it cannot then memory will be
+ * copied to a new location and that will be returned. For safety, always use the pointer
+ * returned instead of old_ptr to avoid using a dead pointer by accident.
+ *
+ * -old_ptr: The pointer to the buffer to resize.
+ * -n: The size to resize to.
+ *
+ *  Returns: NULL on error, else a pointer to the resized buffer.
+ */
 void * Crypt_realloc(void * old_ptr, size_t n) {
     if(old_ptr == NULL) return Crypt_alloc(n);
     if((intptr_t)old_ptr < (intptr_t)__memory_buf.buf || (intptr_t)old_ptr > (intptr_t)__memory_buf.buf + __memory_buf.size) return NULL;
