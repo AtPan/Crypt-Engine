@@ -17,6 +17,16 @@
 
 extern struct __memory __memory_buf;
 
+/* Crypt_defrag_memory
+ * ---------------------------------
+ * This function attempts to defrag the pool by coalescing all adjacent, unallocated blocks together.
+ *
+ * When Crypt's malloc fails to find enough consecutive memory to fulfill a request, this function is
+ * automatically called in hopes that enough can be squeezed together to fulfill the request.
+ *
+ * This can be an expensive operation, so its use should be sparse. To help ease the burden carried by this function,
+ * Crypt's free tries to condense the next block.
+ */
 void Crypt_defrag_memory() {
     struct __memory_block * block = (struct __memory_block *)__memory_buf.buf;
 
