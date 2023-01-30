@@ -38,14 +38,23 @@ FLAG Crypt_init_memory(size_t n) {
     __memory_buf.size = __memory_buf.allocated = 0;
     __memory_buf.buf = malloc(n);
 
-    if(__memory_buf.buf == NULL
-            || __CRYPT_DEFAULT_BLOCK_SIZE <= sizeof(struct __memory_block)
+    if(__memory_buf.buf == NULL) {
+        /* TODO: Add error checking and handeling.
+         * Keep it similar to C's errno for simplicity.
+         */
+
+        return FAIL;
+    }
+
+    if(__CRYPT_DEFAULT_BLOCK_SIZE <= sizeof(struct __memory_block)
             || __CRYPT_DEFAULT_BLOCK_SIZE >= n)
     {
         /* TODO: Add error checking and handleing.
          * Keep it similar to C's errno for simplicity.
          */
 
+        free(__memory_buf.buf);
+        __memory_buf.buf = NULL;
         return FAIL;
     }
 
