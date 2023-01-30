@@ -12,12 +12,22 @@
  *  If not, see <https://www.gnu.org/licenses/>.
  */
 
-
 #include <Crypt_utils/memory.h>
 #include <Crypt_utils/memory/structs.h>
 
 extern struct __memory __memory_buf;
 
+/* Crypt_alloc
+ * ------------------------------
+ *  This is Crypt's implementation of malloc to help avoid fragmenting memory by using a pool allocator.
+ *  Malloc is still called initially to bulk allocate at the front, and from that bulk allocation memory can be
+ *  sliced and allocated as needed.
+ *
+ *  -n: The amount of memory to allocate. If 0, this function always returns NULL.
+ *
+ *  Returns: NULL if there is not enough consecutive memory available, or a pointer to
+ *  memory allocated.
+ */
 void * Crypt_alloc(size_t n) {
     void * __Crypt_mem_alloc_helper(size_t);
     if(n == 0) return NULL;
@@ -41,6 +51,18 @@ void * Crypt_alloc(size_t n) {
     return mem;
 }
 
+/* __Crypt_mem_alloc_helper
+ * --------------------------------------
+ * This function is what actually tries and allocates memory from the pool.
+ *
+ * This function should not be used by itself, as there are no failsafes or alignment occuring
+ * to avoid repeated operations on failure. If this function is called directly, expect the memory
+ * pool to break.
+ *
+ * -n: The amount of memory to allocate.
+ *
+ *  Returns: NULL on error, otherwise a pointer to allocated memory.
+ */
 void * __Crypt_mem_alloc_helper(size_t n) {
     struct __memory_block * block = (struct __memory_block *)__memory_buf.buf;
 
