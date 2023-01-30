@@ -18,6 +18,17 @@
 
 struct __memory __memory_buf;
 
+/* Crypt_init_memory
+ * -----------------------------------
+ * Initializes Crypt's memory management and pool.
+ *
+ * Must be called before any other Crypt memory function is,
+ * otherwise expect undefined behavior.
+ *
+ * -n: The size of the pool. If 0, the default amount will be chosen instead.
+ *
+ *  Returns: FAIL on an error, SUCCESS otherwise.
+ */
 FLAG Crypt_init_memory(size_t n) {
     if(n == 0) {
         n = __CRYPT_DEFAULT_MEMORY_ALLOCATION;
