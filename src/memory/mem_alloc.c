@@ -22,7 +22,7 @@ void * Crypt_alloc(size_t n) {
     void * __Crypt_mem_alloc_helper(size_t);
     if(n == 0) return NULL;
 
-    n = __CRYPT_ROUND_TO_NEXT_BLOCK(n);
+    n = __CRYPT_ROUND_TO_NEXT_BLOCK(n + sizeof(struct __memory_block));
 
     if(n > __memory_buf.allocated - __memory_buf.size) {
         /* TODO: Expand allocated buffer
