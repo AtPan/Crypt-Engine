@@ -38,7 +38,9 @@ extern struct __memory __memory_buf;
  *  Returns: NULL on error, else a pointer to the resized buffer.
  */
 void * Crypt_realloc(void * old_ptr, size_t n) {
+    /* If old_ptr is null, allocate a new pointer */
     if(old_ptr == NULL) return Crypt_alloc(n);
+    /* If old_ptr lies outside of the pool's range, it's not our pointer so return null */
     if((intptr_t)old_ptr < (intptr_t)__memory_buf.buf || (intptr_t)old_ptr > (intptr_t)__memory_buf.buf + __memory_buf.size) return NULL;
 
     /* Round n to next block size */
@@ -47,22 +49,25 @@ void * Crypt_realloc(void * old_ptr, size_t n) {
     /* Find the block old_ptr belongs to */
     struct __memory_block * block = (struct __memory_block *)__memory_buf.buf;
     struct __memory_block * old_block = block;
-
-    /* Find block allocated to old_ptr */
     while(block != NULL && (intptr_t)old_ptr > (intptr_t)block) {
         old_block = block;
         block = block->next;
     }
 
-    /* If the block is not allocated, return null */
-    if(old_block->is_allocated == FALSE) return NULL;
-
-    /* If the requested size of this block is 0, mark it as available */
-    if(n == 0) {
+    /* If no bytes are to be allocated or block is not allocated, return null */
+    if(n == 0 || old_block->is_allocated == FALSE) {
         old_block->is_allocated = FALSE;
         return NULL;
     }
 
+    /* If there is not enough room for reallocation, set error and return null */
+    if(__memory_buf.allocated - __memory_buf.size + old_block->block_size < n) {
+        /* TODO: Set error */
+
+        return NULL;
+    }
+
+    /* Update master memory structure accordingly */
     __memory_buf.size += n - old_block->block_size;
 
     /* If the same size should be allocated, do nothing */
@@ -77,7 +82,6 @@ void * Crypt_realloc(void * old_ptr, size_t n) {
 
         old_block->block_size = n;
         old_block->next = block;
-
 
         return old_ptr;
     }
