@@ -16,19 +16,26 @@
 #ifndef __CRYPT_MEMORY_H
 #define __CRYPT_MEMORY_H
 
+/* Needed for common types like size_t and intptr_t */
 #include <stddef.h>
 #include <stdint.h>
+
+/* Needed for common enum types */
 #include "definitions.h"
 
+/* The default size of a block. Should always be greater than sizeof(struct __memory_block) */
 #define __CRYPT_DEFAULT_BLOCK_SIZE 128
+
+/* The default size of the memory pool */
 #define __CRYPT_DEFAULT_MEMORY_ALLOCATION 1 << 16
-#define __CRYPT_ROUND_TO_NEXT_BLOCK(x) ((x) + __CRYPT_DEFAULT_BLOCK_SIZE - ((intptr_t)(x) % __CRYPT_DEFAULT_BLOCK_SIZE) % __CRYPT_DEFAULT_BLOCK_SIZE)
-#define __CRYPT_POINTER_AS_INT(x) (intptr_t)(x)
-#define __CRYPT_INT_AS_POINTER(x, type) (type *)(x)
+
+/* Rounds a passed number to the next block-aligned integer */
+#define __CRYPT_ROUND_TO_NEXT_BLOCK(x) ((x) + __CRYPT_DEFAULT_BLOCK_SIZE - \
+        ((intptr_t)(x) % __CRYPT_DEFAULT_BLOCK_SIZE) % __CRYPT_DEFAULT_BLOCK_SIZE)
 
 FLAG Crypt_init_memory(size_t);
 void * Crypt_alloc(size_t);
-void Crypt_free(void *);
+FLAG Crypt_free(void *);
 void Crypt_defrag_memory(void);
 void * Crypt_realloc(void *, size_t);
 
