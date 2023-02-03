@@ -28,19 +28,21 @@ extern struct __memory __memory_buf;
  *
  * -ptr: The pointer to free. Must be one returned by Crypt_alloc or Crypt_realloc.
  */
-void Crypt_free(void *ptr) {
+FLAG Crypt_free(void *ptr) {
     intptr_t addr = (intptr_t)ptr;
     struct __memory_block * block = (struct __memory_block *)__memory_buf.buf;
     struct __memory_block * parent = block;
 
-    if(ptr == NULL || addr < (intptr_t)__memory_buf.buf || addr > (intptr_t)__memory_buf.buf + __memory_buf.allocated) return;
+    if(ptr == NULL || addr < (intptr_t)__memory_buf.buf || addr > (intptr_t)__memory_buf.buf + __memory_buf.allocated) {
+        return FAIL;
+    }
 
     while(block != NULL && addr > (intptr_t)block) {
         parent = block;
         block = block->next;
     }
 
-    if(parent->is_allocated == FALSE) { /* wtf ??? */ return; }
+    if(parent->is_allocated == FALSE) { /* wtf ??? */ return FAIL; }
 
     parent->is_allocated = FALSE;
 
@@ -50,4 +52,6 @@ void Crypt_free(void *ptr) {
         parent->block_size += block->block_size;
         parent->next = block->next;
     }
+
+    return SUCCESS;
 }
