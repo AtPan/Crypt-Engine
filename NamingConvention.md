@@ -13,7 +13,7 @@
 ### Functions
 
 1. All public functions will be named using a snakecase scheme.
-2. All public functions will be named four segments:
+2. All public functions will be named using four segments:
     1. The first segment is always `Crypt_`.
     2. The second segment is always the name of the module the function belongs to.
     3. The third segment is always the name of the object the function primarily operates on. This is an optional segment and not always present.
@@ -60,7 +60,7 @@
     - function: This private header contains private function prototype information.
     - type: This private header contains private type definitions.
     - macro: This private header contains private macro definitions
-2. All private monolithic module headers will be placed in include/Crypt_utils/
+2. All private module headers will be placed in include/Crypt_utils/
 3. If private monolithic module header is deemed too large, it will be split into the smaller files defined above.
 4. All private monolithic module headers will be placed in include/Crypt_utils/\<module\>/
 5. Private headers should __never__ be included directly.
@@ -99,7 +99,7 @@
     2. Source files may contain any amount of private functions.
     3. Source files will be titled after the public function it contains.
     4. If a source file contains no public function, it will be named after the job of its private function(s). The file will not be named after the name of the function.
-    5. Examples:
+3. Examples:
         - `memory_allocate.c` - Defines the public function `Crypt_memory_allocate`
         - `list_linkedlist_create.c` - Defines the public function `Crypt_list_linkedlist_create`
         - `sanity_check.c` - Defines private function(s) that provides a sanity checker
