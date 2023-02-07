@@ -14,8 +14,9 @@
  *  Copyright 2023 Anthony Panarello
  */
 
-#include <Crypt_utils/memory.h>
-#include <Crypt_utils/memory/structs.h>
+#include <Crypt.h>
+#include <Crypt_memory.h>
+#include <Crypt_utils/internal_memory.h>
 #include <stdlib.h>
 
 struct __memory __memory_buf;
@@ -31,11 +32,11 @@ struct __memory __memory_buf;
  *
  *  Returns: FAIL on an error, SUCCESS otherwise.
  */
-FLAG Crypt_init_memory(size_t n) {
+flag_t Crypt_memory_init(size_t n) {
     if(n == 0) {
-        n = __CRYPT_DEFAULT_MEMORY_ALLOCATION;
+        n = __CRYPT_MEMORY_DEFAULT_ALLOCATION;
     }
-    n = __CRYPT_ROUND_TO_NEXT_BLOCK(n);
+    n = __CRYPT_MEMORY_ROUND_TO_NEXT_BLOCK(n);
 
     __memory_buf.size = __memory_buf.allocated = 0;
     __memory_buf.buf = malloc(n);
@@ -48,8 +49,8 @@ FLAG Crypt_init_memory(size_t n) {
         return FAIL;
     }
 
-    if(__CRYPT_DEFAULT_BLOCK_SIZE <= sizeof(struct __memory_block)
-            || __CRYPT_DEFAULT_BLOCK_SIZE >= n)
+    if(__CRYPT_MEMORY_DEFAULT_BLOCK_SIZE <= sizeof(struct __memory_block)
+            || __CRYPT_MEMORY_DEFAULT_BLOCK_SIZE >= n)
     {
         /* TODO: Add error checking and handleing.
          * Keep it similar to C's errno for simplicity.

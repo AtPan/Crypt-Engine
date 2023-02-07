@@ -14,23 +14,22 @@
  *  Copyright 2023 Anthony Panarello
  */
 
-#include <Crypt_utils/memory.h>
-#include <Crypt_utils/memory/structs.h>
+#include <Crypt.h>
+#include <Crypt_memory.h>
+#include <Crypt_utils/internal_memory.h>
 
 extern struct __memory __memory_buf;
 
-/* Crypt_free
- * ----------------------------------
- * Crypt's implementation of free.
+/* Crypt's implementation of free.
  * Attempts to free a block of memory previously allocated to a user.
  *
  * WARNING: Only pointers that have been returned by Crypt_alloc or Crypt_realloc should be
  * used here! This function will check if the pointer passed lies within the pool before doing
  * anything with it.
  *
- * -ptr: The pointer to free. Must be one returned by Crypt_alloc or Crypt_realloc.
+ * @ptr: The pointer to free. Must be one returned by Crypt_alloc or Crypt_realloc.
  */
-FLAG Crypt_free(void *ptr) {
+flag_t Crypt_memory_free(void *ptr) {
     intptr_t addr = (intptr_t)ptr;
     struct __memory_block * block = (struct __memory_block *)__memory_buf.buf;
     struct __memory_block * parent = block;

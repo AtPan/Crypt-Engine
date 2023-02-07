@@ -10,15 +10,26 @@
  *
  *  You should have received a copy of the GNU General Public License along with Crypt Engine.
  *  If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  Copyright 2023 Anthony Panarello
  */
 
-
 #ifndef __CRYPT_MEMORY_H
-#error "Do not include <memory/structs.h> directly; use <Crypt_utils/memory.h> instead"
+#error "Do not include <Crypt_utils/internal_memory.h> directly; use <Crypt_memory.h> instead"
 #endif
 
-#ifndef __CRYPT_MEMORY_STRUCTS_H
-#define __CRYPT_MEMORY_STRUCTS_H
+#ifndef __CRYPT_MEMORY_INTERNAL_H
+#define __CRYPT_MEMORY_INTERNAL_H
+
+/* The default size of a block. Should always be greater than sizeof(struct __memory_block) */
+#define __CRYPT_MEMORY_DEFAULT_BLOCK_SIZE 128
+
+/* The default size of the memory pool */
+#define __CRYPT_MEMORY_DEFAULT_ALLOCATION 1 << 16
+
+/* Rounds a passed number to the next block-aligned integer */
+#define __CRYPT_MEMORY_ROUND_TO_NEXT_BLOCK(x) ((x) + __CRYPT_MEMORY_DEFAULT_BLOCK_SIZE - \
+        ((intptr_t)(x) % __CRYPT_MEMORY_DEFAULT_BLOCK_SIZE) % __CRYPT_MEMORY_DEFAULT_BLOCK_SIZE)
 
 /* Structure used to represent allocated memory for the engine.
  *
@@ -44,5 +55,6 @@ struct __memory_block {
     bool_t is_allocated;
     struct __memory_block * next;
 };
+
 
 #endif

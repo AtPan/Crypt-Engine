@@ -14,25 +14,18 @@
  *  Copyright 2023 Anthony Panarello
  */
 
-#include <Crypt_utils/memory.h>
-#include <Crypt_utils/memory/structs.h>
-#include <stdlib.h>
+#ifndef __CRYPT_H
+#define __CRYPT_H
 
-extern struct __memory __memory_buf;
+typedef enum {
+    FAIL,
+    SUCCESS,
+} flag_t;
 
-/* Crypt_quit_memory
- * --------------------------------------
- *  Frees all allocated memory from the pool and
- *  resets the master memory struct.
- *
- *  DO NOT use any pointers allocated from Crypt_alloc or Crypt_realloc,
- *  call Crypt_alloc, Crypt_realloc, Crypt_free, Crypt_defrag_memory, or any other
- *  Crypt memory function other than Crypt_init_memory after calling this function.
- */
-void Crypt_quit_memory() {
-    if(__memory_buf.buf == NULL) return;
+typedef enum {
+    FALSE = 0,
+    TRUE = 1,
+} bool_t;
 
-    free(__memory_buf.buf);
-    __memory_buf.buf = NULL;
-    __memory_buf.allocated = __memory_buf.size = 0;
-}
+
+#endif

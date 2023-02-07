@@ -14,15 +14,13 @@
  *  Copyright 2023 Anthony Panarello
  */
 
-#include <Crypt_utils/memory.h>
-#include <Crypt_utils/memory/structs.h>
+#include <Crypt_memory.h>
+#include <Crypt_utils/internal_memory.h>
 #include <string.h>
 
 extern struct __memory __memory_buf;
 
-/* Crypt_realloc
- * -----------------------------------------------
- * Attempts to resize a pointer to a given size.
+/* Attempts to resize a pointer to a given size.
  * The passed pointer must be a pointer returned by Crypt_alloc or from a previous
  * call to Crypt_realloc.
  *
@@ -39,14 +37,14 @@ extern struct __memory __memory_buf;
  *
  *  Returns: NULL on error, else a pointer to the resized buffer.
  */
-void * Crypt_realloc(void * old_ptr, size_t n) {
+void * Crypt_memory_realloc(void * old_ptr, size_t n) {
     /* If old_ptr is null, allocate a new pointer */
-    if(old_ptr == NULL) return Crypt_alloc(n);
+    if(old_ptr == NULL) return Crypt_memory_malloc(n);
     /* If old_ptr lies outside of the pool's range, it's not our pointer so return null */
     if((intptr_t)old_ptr < (intptr_t)__memory_buf.buf || (intptr_t)old_ptr > (intptr_t)__memory_buf.buf + __memory_buf.size) return NULL;
 
     /* Round n to next block size */
-    n = __CRYPT_ROUND_TO_NEXT_BLOCK(n + sizeof(struct __memory_block));
+    n = __CRYPT_MEMORY_ROUND_TO_NEXT_BLOCK(n + sizeof(struct __memory_block));
 
     /* Find the block old_ptr belongs to */
     struct __memory_block * block = (struct __memory_block *)__memory_buf.buf;
@@ -104,7 +102,7 @@ void * Crypt_realloc(void * old_ptr, size_t n) {
 
     /* If there is too little space, copy memory elsewhere */
     else if(count < n) {
-        if((old_ptr = Crypt_alloc(n)) == NULL) return NULL;
+        if((old_ptr = Crypt_memory_malloc(n)) == NULL) return NULL;
         memcpy(old_ptr, (void *)((intptr_t)old_block + sizeof(struct __memory_block)), old_block->block_size - sizeof(struct __memory_block));
         old_block->is_allocated = FALSE;
     }
