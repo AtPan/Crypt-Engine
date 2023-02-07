@@ -10,6 +10,8 @@
  *
  *  You should have received a copy of the GNU General Public License along with Crypt Engine.
  *  If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  Copyright 2023 Anthony Panarello
  */
 
 #include <Crypt_utils/memory.h>
