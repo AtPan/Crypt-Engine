@@ -41,6 +41,5 @@ clean:
 			rm $$obj_file ; \
 		fi; \
 	done;
-	@for so_file in $(shell ls $(BIN)/*.so) ; do \
-		rm $$so_file ; \
-	done;
+	@rm -rf $(BIN)
+	@mkdir $(BIN)
