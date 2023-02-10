@@ -14,13 +14,17 @@ TARGETS_OBJS := ${TARGETS_SRCS:%.c=%.o}
 
 SDL_FLAGS := `pkg-config --cflags --libs sdl2`
 
-.PHONY: debug_build release_build all clean
+.PHONY: debug_build release_build all clean build_flags
 
 debug_build: CFLAGS := $(CFLAGS) $(CFLAGS_DEBUG)
 debug_build: $(DIRECTORIES)
 
 release_build: CFLAGS := $(CFLAGS) $(CFLAGS_RELEASE)
 release_build: all
+
+build_flags:
+	@make clean
+	@bear make
 
 all: $(DIRECTORIES)
 
@@ -37,4 +41,6 @@ clean:
 			rm $$obj_file ; \
 		fi; \
 	done;
-	@rm $(BIN)/*.so
+	@for so_file in $(shell ls $(BIN)/*.so) ; do \
+		rm $$so_file ; \
+	done;
