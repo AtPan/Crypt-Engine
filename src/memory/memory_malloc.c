@@ -19,15 +19,6 @@
 
 extern struct __memory __memory_buf;
 
-/*  This is Crypt's implementation of malloc to help avoid fragmenting memory by using a pool allocator.
- *  Malloc is still called initially to bulk allocate at the front, and from that bulk allocation memory can be
- *  sliced and allocated as needed.
- *
- *  @n: The amount of memory to allocate. If 0, this function always returns NULL.
- *
- *  Returns: NULL if there is not enough consecutive memory available, or a pointer to
- *  memory allocated.
- */
 void * Crypt_memory_malloc(size_t n) {
     void * __Crypt_memory_malloc(size_t);
     if(n == 0) return NULL;

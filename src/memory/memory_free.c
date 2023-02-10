@@ -20,15 +20,6 @@
 
 extern struct __memory __memory_buf;
 
-/* Crypt's implementation of free.
- * Attempts to free a block of memory previously allocated to a user.
- *
- * WARNING: Only pointers that have been returned by Crypt_alloc or Crypt_realloc should be
- * used here! This function will check if the pointer passed lies within the pool before doing
- * anything with it.
- *
- * @ptr: The pointer to free. Must be one returned by Crypt_alloc or Crypt_realloc.
- */
 flag_t Crypt_memory_free(void *ptr) {
     intptr_t addr = (intptr_t)ptr;
     struct __memory_block * block = (struct __memory_block *)__memory_buf.buf;

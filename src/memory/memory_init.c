@@ -21,20 +21,9 @@
 
 struct __memory __memory_buf;
 
-/* Crypt_init_memory
- * -----------------------------------
- * Initializes Crypt's memory management and pool.
- *
- * Must be called before any other Crypt memory function is,
- * otherwise expect undefined behavior.
- *
- * -n: The size of the pool. If 0, the default amount will be chosen instead.
- *
- *  Returns: FAIL on an error, SUCCESS otherwise.
- */
 flag_t Crypt_memory_init(size_t n) {
     if(n == 0) {
-        n = __CRYPT_MEMORY_DEFAULT_ALLOCATION;
+        n = CRYPT_MEMORY_DEFAULT_ALLOCATION;
     }
     n = __CRYPT_MEMORY_ROUND_TO_NEXT_BLOCK(n);
 
@@ -49,8 +38,8 @@ flag_t Crypt_memory_init(size_t n) {
         return FAIL;
     }
 
-    if(__CRYPT_MEMORY_DEFAULT_BLOCK_SIZE <= sizeof(struct __memory_block)
-            || __CRYPT_MEMORY_DEFAULT_BLOCK_SIZE >= n)
+    if(CRYPT_MEMORY_DEFAULT_BLOCK_SIZE <= sizeof(struct __memory_block)
+            || CRYPT_MEMORY_DEFAULT_BLOCK_SIZE >= n)
     {
         /* TODO: Add error checking and handleing.
          * Keep it similar to C's errno for simplicity.

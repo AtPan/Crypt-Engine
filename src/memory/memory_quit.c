@@ -20,13 +20,6 @@
 
 extern struct __memory __memory_buf;
 
-/*  Frees all allocated memory from the pool and
- *  resets the master memory struct.
- *
- *  DO NOT use any pointers allocated from Crypt_alloc or Crypt_realloc,
- *  call Crypt_alloc, Crypt_realloc, Crypt_free, Crypt_defrag_memory, or any other
- *  Crypt memory function other than Crypt_init_memory after calling this function.
- */
 void Crypt_memory_quit() {
     if(__memory_buf.buf == NULL) return;
 
