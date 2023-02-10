@@ -21,15 +21,10 @@
 #ifndef __CRYPT_MEMORY_INTERNAL_H
 #define __CRYPT_MEMORY_INTERNAL_H
 
-/* The default size of a block. Should always be greater than sizeof(struct __memory_block) */
-#define __CRYPT_MEMORY_DEFAULT_BLOCK_SIZE 128
-
-/* The default size of the memory pool */
-#define __CRYPT_MEMORY_DEFAULT_ALLOCATION 1 << 16
 
 /* Rounds a passed number to the next block-aligned integer */
-#define __CRYPT_MEMORY_ROUND_TO_NEXT_BLOCK(x) ((x) + __CRYPT_MEMORY_DEFAULT_BLOCK_SIZE - \
-        ((intptr_t)(x) % __CRYPT_MEMORY_DEFAULT_BLOCK_SIZE) % __CRYPT_MEMORY_DEFAULT_BLOCK_SIZE)
+#define __CRYPT_MEMORY_ROUND_TO_NEXT_BLOCK(x) ((x) + CRYPT_MEMORY_DEFAULT_BLOCK_SIZE - \
+        ((intptr_t)(x) % CRYPT_MEMORY_DEFAULT_BLOCK_SIZE) % CRYPT_MEMORY_DEFAULT_BLOCK_SIZE)
 
 /* Structure used to represent allocated memory for the engine.
  *
