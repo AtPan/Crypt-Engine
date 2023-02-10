@@ -23,9 +23,16 @@ typedef enum {
 } flag_t;
 
 typedef enum {
+    LOG,
+    INFO,
+    WARNING,
+    ERROR,
+    FATAL,
+} log_level_t;
+
+typedef enum {
     FALSE = 0,
     TRUE = 1,
 } bool_t;
-
 
 #endif
