@@ -17,11 +17,19 @@
 #ifndef __CRYPT_H
 #define __CRYPT_H
 
+// --------------------------------
+/* Enumerated Types */
+
+/* This type is meant to pass signals between functions.
+ * The two most common flags are FAIL and SUCCESS.
+ */
 typedef enum {
     FAIL,
     SUCCESS,
 } flag_t;
 
+/* This type is meant to tell the logger the severity of a message.
+ */
 typedef enum {
     LOG,
     INFO,
@@ -30,9 +38,14 @@ typedef enum {
     FATAL,
 } log_level_t;
 
+/* This type is meant to act as a basic boolean type.
+ */
 typedef enum {
     FALSE = 0,
     TRUE = 1,
 } bool_t;
+
+/* End of Enumerated Types */
+// ----------------------------
 
 #endif
