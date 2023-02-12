@@ -126,7 +126,7 @@
 ### Functions
 
 1. All public functions will be documented in its respective header file.
-2. All private functions will be documented in the source file it is defined in.
+2. All private functions will be documented in its private header file.
 3. All functions within header files will be documented with the following information:
     - A description of what the function does.
     - List of parameters, and their purpose.
