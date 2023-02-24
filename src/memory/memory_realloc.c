@@ -37,7 +37,7 @@ extern struct __memory __memory_buf;
  *
  *  Returns: NULL on error, else a pointer to the resized buffer.
  */
-void * Crypt_memory_realloc(void * old_ptr, size_t n) {
+void * Crypt_memory_realloc(void * restrict old_ptr, size_t n) {
     /* If old_ptr is null, allocate a new pointer */
     if(old_ptr == NULL) return Crypt_memory_malloc(n);
     /* If old_ptr lies outside of the pool's range, it's not our pointer so return null */

@@ -20,7 +20,7 @@
 
 extern struct __memory __memory_buf;
 
-flag_t Crypt_memory_free(void *ptr) {
+flag_t Crypt_memory_free(void * restrict ptr) {
     intptr_t addr = (intptr_t)ptr;
     struct __memory_block * block = (struct __memory_block *)__memory_buf.buf;
     struct __memory_block * parent = block;
