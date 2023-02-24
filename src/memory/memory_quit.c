@@ -14,9 +14,10 @@
  *  Copyright 2023 Anthony Panarello
  */
 
+#include <stdlib.h>
 #include <Crypt_memory.h>
 #include <Crypt_utils/internal_memory.h>
-#include <stdlib.h>
+#include <Crypt_utils/internal_resources.h>
 
 extern struct __memory __memory_buf;
 
@@ -26,4 +27,6 @@ void Crypt_memory_quit() {
     free(__memory_buf.buf);
     __memory_buf.buf = NULL;
     __memory_buf.allocated = __memory_buf.size = 0;
+
+    __Crypt_resources_remove_resource(__Crypt_resource_type_memory);
 }
