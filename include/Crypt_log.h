@@ -17,7 +17,11 @@
 #ifndef __CRYPT_LOG_H
 #define __CRYPT_LOG_H
 
+/* Needed for common types such as flag_t */
 #include "Crypt.h"
+
+// -------------------------------------------------------------------------
+// Initializers and Destructors
 
 /* Initializes the log module.
  * This function must be called before any other log function is called.
@@ -30,6 +34,18 @@
  */
 extern flag_t Crypt_log_init(const char * restrict fn);
 
+/* Ends the log module and frees all resources used by the log module.
+ * Must be called when the log module is done being used.
+ */
+extern void Crypt_log_quit(void);
+
+// End of Initializers and Destructors
+// -------------------------------------------------------------------------
+
+
+// -------------------------------------------------------------------------
+// Writers
+
 /* Writes a message to an open log file.
  * The log module must have been initiated before this function can be called.
  *
@@ -38,9 +54,8 @@ extern flag_t Crypt_log_init(const char * restrict fn);
  */
 extern void Crypt_log_write(const char * restrict fmt, ...);
 
-/* Ends the log module and frees all resources used by the log module.
- * Must be called when the log module is done being used.
- */
-extern void Crypt_log_quit(void);
+// End of Writers
+// -------------------------------------------------------------------------
+
 
 #endif
