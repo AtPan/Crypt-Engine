@@ -102,7 +102,7 @@ extern void * Crypt_memory_malloc(size_t);
  * Returns:
  * The resized pointer. This will usually be the same as @p, but is not guaranteed to be, and the return value should be used instead.
  */
-extern void * Crypt_memory_realloc(void *, size_t);
+extern void * Crypt_memory_realloc(void * restrict, size_t);
 
 /* Crypt's implementation of free.
  * Attempts to free a block of memory previously allocated to a user.
@@ -117,7 +117,7 @@ extern void * Crypt_memory_realloc(void *, size_t);
  * Returns:
  * This function should always return SUCCESS. If ERROR is returned, report it as a bug.
  */
-extern flag_t Crypt_memory_free(void *);
+extern flag_t Crypt_memory_free(void * restrict);
 
 // End of Allocators
 // --------------------------------------------------------------------------
