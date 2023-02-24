@@ -12,14 +12,20 @@ DIRECTORIES := $(shell ls $(SRC))
 TARGETS_SRCS := $(wildcard $(SRC)/*/*.c)
 TARGETS_OBJS := ${TARGETS_SRCS:%.c=%.o}
 
+RELEASE_DIR := $(BIN)/release
+DEBUG_DIR := $(BIN)/debug
+TARGET_DIR := $(BIN)
+
 SDL_FLAGS := `pkg-config --cflags --libs sdl2`
 
-.PHONY: debug_build release_build all clean build_flags
+.PHONY: debug_build release_build all clean build_flags clean_objs
 
 debug_build: CFLAGS := $(CFLAGS) $(CFLAGS_DEBUG)
+debug_build: TARGET_DIR := $(DEBUG_DIR)
 debug_build: $(DIRECTORIES)
 
 release_build: CFLAGS := $(CFLAGS) $(CFLAGS_RELEASE)
+release_build: TARGET_DIR := $(RELEASE_DIR)
 release_build: all
 
 build_flags:
@@ -30,7 +36,7 @@ all: $(DIRECTORIES)
 
 .SECONDEXPANSION:
 $(DIRECTORIES): $$(filter $(SRC)/$$@/%.o, $(TARGETS_OBJS))
-	$(CC) -shared -o $(BIN)/lib$@.so $^ $(CFLAGS_LIBS) $(SDL_FLAGS)
+	$(CC) -shared -o $(TARGET_DIR)/lib$@.so $^ $(CFLAGS_LIBS) $(SDL_FLAGS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -o $@ $^ $(CFLAGS_LIBS) $(SDL_FLAGS)
@@ -41,5 +47,16 @@ clean:
 			rm $$obj_file ; \
 		fi; \
 	done;
-	@rm -rf $(BIN)
-	@mkdir $(BIN)
+	@for so_file in $$(ls $(BIN)/*) ; do \
+		if [ -f $$so_file ] ; then \
+			rm $$so_file ; \
+		fi; \
+	done;
+	@rm -rf $(BIN)/*/*.so
+
+clean_objs:
+	@for obj_file in $(TARGETS_OBJS) ; do \
+		if [ -f $$obj_file ] ; then \
+			rm $$obj_file ; \
+		fi; \
+	done;
