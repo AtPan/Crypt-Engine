@@ -14,10 +14,11 @@
  *  Copyright 2023 Anthony Panarello
  */
 
+#include <stdlib.h>
 #include <Crypt.h>
 #include <Crypt_memory.h>
 #include <Crypt_utils/internal_memory.h>
-#include <stdlib.h>
+#include <Crypt_utils/internal_resources.h>
 
 struct __memory __memory_buf;
 
@@ -55,6 +56,8 @@ flag_t Crypt_memory_init(size_t n) {
     head->block_size = n;
     head->is_allocated = FALSE;
     head->next = NULL;
+
+    __Crypt_resources_add_resource(__Crypt_resource_type_memory, (void *)__memory_buf.buf);
 
     return SUCCESS;
 }
