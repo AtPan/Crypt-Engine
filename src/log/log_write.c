@@ -19,7 +19,7 @@
 #include <stdarg.h>
 #include <time.h>
 
-extern FILE * __log_file;
+extern FILE * __Crypt_log_file;
 
 void Crypt_log_write(const char * restrict fmt, ...) {
     va_list args;
@@ -28,11 +28,11 @@ void Crypt_log_write(const char * restrict fmt, ...) {
     const time_t ti = time(NULL);
     struct tm * t = gmtime(&ti);
 
-    fprintf(__log_file, "[%d-%02d-%02d %02d:%02d:%02d UTC]: ",
+    fprintf(__Crypt_log_file, "[%d-%02d-%02d %02d:%02d:%02d UTC]: ",
             t->tm_year + 1900, t->tm_mon + 1, t->tm_mday,
             t->tm_hour, t->tm_min, t->tm_sec);
-    vfprintf(__log_file, fmt, args);
-    fflush(__log_file);
+    vfprintf(__Crypt_log_file, fmt, args);
+    fflush(__Crypt_log_file);
 
     va_end(args);
 }

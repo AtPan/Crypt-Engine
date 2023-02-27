@@ -18,16 +18,16 @@
 #include <stdio.h>
 #include <time.h>
 
-extern FILE * __log_file;
+extern FILE * __Crypt_log_file;
 
 void Crypt_log_quit() {
     const time_t ti = time(NULL);
     struct tm * t = gmtime(&ti);
 
-    fprintf(__log_file, "[%d-%02d-%02d %02d:%02d:%02d UTC] Closing log file.\n",
+    fprintf(__Crypt_log_file, "[%d-%02d-%02d %02d:%02d:%02d UTC] Closing log file.\n",
             t->tm_year + 1900, t->tm_mon + 1, t->tm_mday,
             t->tm_hour, t->tm_min, t->tm_sec);
 
-    fflush(__log_file);
-    fclose(__log_file);
+    fflush(__Crypt_log_file);
+    fclose(__Crypt_log_file);
 }

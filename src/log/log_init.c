@@ -21,22 +21,23 @@
 #include <stdio.h>
 #include <time.h>
 
-FILE * __log_file;
+FILE * __Crypt_log_file;
 
-flag_t Crypt_log_init(const char *file_name) {
-  freopen("/dev/null", "a+", stdout);
-  freopen("/dev/null", "a+", stderr);
+flag_t Crypt_log_init(const char * file_name) {
+    /* TODO: Move to a main function */
+    freopen("/dev/null", "a+", stdout);
+    freopen("/dev/null", "a+", stderr);
 
-  if ((__log_file = fopen(file_name, "a")) == NULL) {
-    return FAIL;
-  }
+    if ((__Crypt_log_file = fopen(file_name, "a")) == NULL) {
+        return FAIL;
+    }
 
-  const time_t ti = time(NULL);
-  struct tm *t = gmtime(&ti);
+    const time_t ti = time(NULL);
+    struct tm *t = gmtime(&ti);
 
-  fprintf(__log_file, "[%d-%02d-%02d %02d:%02d:%02d UTC] Opening log file.\n",
+    fprintf(__Crypt_log_file, "[%d-%02d-%02d %02d:%02d:%02d UTC] Opening log file.\n",
           t->tm_year + 1900, t->tm_mon + 1, t->tm_mday, t->tm_hour, t->tm_min,
           t->tm_sec);
 
-  return SUCCESS;
+    return SUCCESS;
 }
