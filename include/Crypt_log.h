@@ -20,6 +20,8 @@
 /* Needed for common types such as flag_t */
 #include "Crypt.h"
 
+typedef struct __Crypt_log_t cryptlog_t ;
+
 // -------------------------------------------------------------------------
 // Initializers and Destructors
 
@@ -27,17 +29,21 @@
  * This function must be called before any other log function is called.
  *
  * Parameters:
- * @fn - The name of the log file to output to.
+ * @cl - A pointer to the cryptlog_t struct to place logging information in.
+ * @fn - The name of the file to open.
  *
  * Returns:
- * ERROR if the file named by @fn could not be opened, SUCCESS otherwise.
+ * SUCCESS if the log file was opened without issue. FAIL on error.
  */
-extern flag_t Crypt_log_init(const char * restrict fn);
+extern flag_t Crypt_log_init(cryptlog_t * cl, const char * restrict fn);
 
 /* Ends the log module and frees all resources used by the log module.
  * Must be called when the log module is done being used.
+ *
+ * Parameters:
+ * @cl - A pointer to the cryptlog_t struct to uninitialize. Does not free the pointer.
  */
-extern void Crypt_log_quit(void);
+extern void Crypt_log_quit(cryptlog_t * cl);
 
 // End of Initializers and Destructors
 // -------------------------------------------------------------------------
@@ -50,9 +56,10 @@ extern void Crypt_log_quit(void);
  * The log module must have been initiated before this function can be called.
  *
  * Parameters:
+ * @cl - A pointer to the cryptlog_t struct to log.
  * @fmt - The format string used in stdio functions like printf.
  */
-extern void Crypt_log_write(const char * restrict fmt, ...);
+extern void Crypt_log_write(cryptlog_t * cl, const char * restrict fmt, ...);
 
 // End of Writers
 // -------------------------------------------------------------------------

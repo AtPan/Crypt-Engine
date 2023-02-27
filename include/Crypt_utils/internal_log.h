@@ -14,19 +14,19 @@
  *  Copyright 2023 Anthony Panarello
  */
 
-#include <Crypt_log.h>
-#include <Crypt_utils/internal_log.h>
+#ifndef __CRYPT_LOG_H
+#error "Do not include directly; include <Crypt_log.h> instead"
+#endif
+
+#ifndef __CRYPT_INTERNAL_LOG_H
+#define __CRYPT_INTERNAL_LOG_H
+
 #include <stdio.h>
-#include <time.h>
+#include "Crypt.h"
 
-void Crypt_log_quit(cryptlog_t * cl) {
-    const time_t ti = time(NULL);
-    struct tm * t = gmtime(&ti);
+struct __Crypt_log_t {
+    FILE * fh;
+    const char * name;
+};
 
-    fprintf(cl->fh, "[%d-%02d-%02d %02d:%02d:%02d UTC] Closing log file.\n",
-            t->tm_year + 1900, t->tm_mon + 1, t->tm_mday,
-            t->tm_hour, t->tm_min, t->tm_sec);
-
-    fflush(cl->fh);
-    fclose(cl->fh);
-}
+#endif

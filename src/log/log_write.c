@@ -15,24 +15,23 @@
  */
 
 #include <Crypt_log.h>
+#include <Crypt_utils/internal_log.h>
 #include <stdio.h>
 #include <stdarg.h>
 #include <time.h>
 
-extern FILE * __Crypt_log_file;
-
-void Crypt_log_write(const char * restrict fmt, ...) {
+void Crypt_log_write(cryptlog_t * cl, const char * restrict fmt, ...) {
     va_list args;
     va_start(args, fmt);
 
     const time_t ti = time(NULL);
     struct tm * t = gmtime(&ti);
 
-    fprintf(__Crypt_log_file, "[%d-%02d-%02d %02d:%02d:%02d UTC]: ",
+    fprintf(cl->fh, "[%d-%02d-%02d %02d:%02d:%02d UTC]: ",
             t->tm_year + 1900, t->tm_mon + 1, t->tm_mday,
             t->tm_hour, t->tm_min, t->tm_sec);
-    vfprintf(__Crypt_log_file, fmt, args);
-    fflush(__Crypt_log_file);
+    vfprintf(cl->fh, fmt, args);
+    fflush(cl->fh);
 
     va_end(args);
 }

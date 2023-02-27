@@ -18,26 +18,28 @@
 
 #include <Crypt.h>
 #include <Crypt_log.h>
+#include <Crypt_utils/internal_log.h>
 #include <stdio.h>
 #include <time.h>
 
-FILE * __Crypt_log_file;
-
-flag_t Crypt_log_init(const char * file_name) {
+flag_t Crypt_log_init(cryptlog_t * cl, const char * file_name) {
     /* TODO: Move to a main function */
     freopen("/dev/null", "a+", stdout);
     freopen("/dev/null", "a+", stderr);
 
-    if ((__Crypt_log_file = fopen(file_name, "a")) == NULL) {
+    FILE * fh = fopen(file_name, "a");
+
+    if (fh == NULL) {
         return FAIL;
     }
 
     const time_t ti = time(NULL);
     struct tm *t = gmtime(&ti);
 
-    fprintf(__Crypt_log_file, "[%d-%02d-%02d %02d:%02d:%02d UTC] Opening log file.\n",
+    fprintf((cl->fh = fh), "[%d-%02d-%02d %02d:%02d:%02d UTC] Opening log file.\n",
           t->tm_year + 1900, t->tm_mon + 1, t->tm_mday, t->tm_hour, t->tm_min,
           t->tm_sec);
 
+    cl->name = file_name;
     return SUCCESS;
 }
