@@ -36,7 +36,7 @@ all: $(DIRECTORIES)
 
 .SECONDEXPANSION:
 $(DIRECTORIES): $$(filter $(SRC)/$$@/%.o, $(TARGETS_OBJS))
-	$(CC) -shared -o $(TARGET_DIR)/lib$@.so $^ $(CFLAGS_LIBS) $(SDL_FLAGS)
+	$(CC) -shared -o $(TARGET_DIR)/libCrpt$@.so $^ $(CFLAGS_LIBS) $(SDL_FLAGS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -o $@ $^ $(CFLAGS_LIBS) $(SDL_FLAGS)
