@@ -19,10 +19,10 @@
 #include <stddef.h>
 #include <Crypt_utils/internal_resources.h>
 
-static const void *__Crypt_resource_table[__CRYPT_RESOURCES_MAX_RESOURCES] = {NULL};
+static void *__Crypt_resource_table[__CRYPT_RESOURCES_MAX_RESOURCES] = {NULL};
 
-flag_t __Crypt_resources_add_resource(enum __Crypt_resource_type_t t, const void *p) {
-  if (p == NULL || (size_t)t > __CRYPT_RESOURCES_MAX_RESOURCES - 1 ||
+flag_t __Crypt_resources_add_resource(enum __Crypt_resource_type_t t, void *p) {
+  if (p == NULL || (size_t)t >= __CRYPT_RESOURCES_MAX_RESOURCES ||
       __Crypt_resource_table[(size_t)t] != NULL)
     return FAIL;
 
@@ -35,6 +35,10 @@ void __Crypt_resources_remove_resource(enum __Crypt_resource_type_t t) {
   if ((size_t)t > __CRYPT_RESOURCES_MAX_RESOURCES - 1)
     return;
   __Crypt_resource_table[(size_t)t] = NULL;
+}
+
+void * __Crypt_resources_get_resource(enum __Crypt_resource_type_t t) {
+    return (size_t)t >= __CRYPT_RESOURCES_MAX_RESOURCES ? NULL : __Crypt_resource_table[(size_t)t];
 }
 
 bool_t __Crypt_resources_get_resource_bool(enum __Crypt_resource_type_t t) {
