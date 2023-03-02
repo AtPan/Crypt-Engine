@@ -59,7 +59,7 @@ enum __Crypt_resource_type_t {
  * Returns:
  * FAIL if that resource is already saved or an error occurs, SUCCESS otherwise.
  */
-extern flag_t __Crypt_resources_add_resource(enum __Crypt_resource_type_t t, const void * p);
+extern flag_t __Crypt_resources_add_resource(enum __Crypt_resource_type_t t, void * p);
 
 /* Removes a resource from the resource table.
  * This function only marks a resource as free to other modules, it does not actually free the resource.
