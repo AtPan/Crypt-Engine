@@ -25,9 +25,12 @@
 #undef Crypt_memory_malloc
 #undef Crypt_memory_realloc
 #undef Crypt_memory_free
+#undef Crypt_memory_init
+#undef Crypt_memory_quit
 
 struct __Crypt_pointer_table_entry {
     intptr_t ptr;
+    size_t n;
     const char * f;
     unsigned int l;
 };
@@ -36,10 +39,10 @@ static struct __Crypt_pointer_table_entry __Crypt_pointer_table[CRYPT_DEBUG_MEMO
 static size_t __Crypt_pointer_table_size = 0;
 static cryptlog_t __Crypt_memory_log;
 
-flag_t Crypt_debug_memory() {
-    if(__Crypt_resources_get_resource_bool(__Crypt_resource_type_memory) == FALSE) return FAIL;
+flag_t __Crypt_debug_memory_init(size_t n, const char * f, unsigned int l) {
+    if(Crypt_memory_init(n) == FALSE) return FAIL;
     if(Crypt_log_init(&__Crypt_memory_log, CRYPT_DEBUG_MEMORY_LOG_LOCATION) == FAIL) return FAIL;
-
+    Crypt_log_write(&__Crypt_memory_log, "Memory log opened at %s:%u\n", f, l);
     return SUCCESS;
 }
 
@@ -54,7 +57,7 @@ void * __Crypt_debug_memory_malloc(size_t n, const char * f, unsigned int l) {
             "Crypt_memory_malloc(%ld) -- Returned 0x%x\n",
             n, (intptr_t)ptr);
 
-    __Crypt_debug_memory_add_ptr_to_table(ptr, f, l);
+    __Crypt_debug_memory_add_ptr_to_table(ptr, n, f, l);
 
     return ptr;
 }
@@ -74,7 +77,7 @@ void * __Crypt_debug_memory_realloc(void * restrict p, size_t n, const char * f,
 
     __Crypt_debug_memory_remove_ptr_from_table(p);
 
-    if(ptr != NULL) __Crypt_debug_memory_add_ptr_to_table(ptr, f, l);
+    if(ptr != NULL) __Crypt_debug_memory_add_ptr_to_table(ptr, n, f, l);
 
     return ptr;
 }
@@ -95,11 +98,29 @@ flag_t __Crypt_debug_memory_free(void * restrict p, const char * f, unsigned int
     return free_ret;
 }
 
-void __Crypt_debug_memory_add_ptr_to_table(void * restrict p, const char * f, unsigned int l) {
+
+void __Crypt_debug_memory_quit(const char * f, unsigned int l) {
+    Crypt_log_write(&__Crypt_memory_log,
+            "Stopping memory module at %s:%u\n",
+            f, l);
+
+    for(size_t i = 0; i < __Crypt_pointer_table_size; i++) {
+        struct __Crypt_pointer_table_entry entry = __Crypt_pointer_table[i];
+        Crypt_log_write(&__Crypt_memory_log,
+                "Memory leak detected:\n"
+                "\tFrom %s:%u: Buffer at 0x%x with requested size %lu was not freed\n",
+                entry.f, entry.l, entry.ptr, entry.n);
+    }
+
+    Crypt_memory_quit();
+    Crypt_log_quit(&__Crypt_memory_log);
+}
+
+void __Crypt_debug_memory_add_ptr_to_table(void * restrict p, size_t n, const char * f, unsigned int l) {
     if(__Crypt_pointer_table_size == CRYPT_DEBUG_MEMORY_TABLE_POINTER_SIZE) return;
 
-    struct __Crypt_pointer_table_entry entry = {.ptr = (intptr_t)p, .f = f, .l = l};
-    size_t low = 0, high = __Crypt_pointer_table_size, mid = 0;
+    struct __Crypt_pointer_table_entry entry = {.ptr = (intptr_t)p, .f = f, .l = l, .n = n};
+    size_t low = 0, high = __Crypt_pointer_table_size - 1, mid = 0;
 
     if(__Crypt_pointer_table_size == 0) {
         __Crypt_pointer_table[__Crypt_pointer_table_size++] = entry;
@@ -112,8 +133,8 @@ void __Crypt_debug_memory_add_ptr_to_table(void * restrict p, const char * f, un
         else high = mid;
     }
 
-    for(size_t i = __Crypt_pointer_table_size - 1; i >= mid; i--) {
-        __Crypt_pointer_table[i + 1] = __Crypt_pointer_table[i];
+    for(size_t i = __Crypt_pointer_table_size; i > mid; i--) {
+        __Crypt_pointer_table[i] = __Crypt_pointer_table[i - 1];
     }
 
     __Crypt_pointer_table[mid] = entry;
@@ -123,7 +144,7 @@ void __Crypt_debug_memory_add_ptr_to_table(void * restrict p, const char * f, un
 void __Crypt_debug_memory_remove_ptr_from_table(void * restrict p) {
     if(__Crypt_pointer_table_size == 0) return;
 
-    size_t low = 0, high = __Crypt_pointer_table_size, mid = 0;
+    size_t low = 0, high = __Crypt_pointer_table_size - 1, mid = 0;
 
     while(low < high) {
         mid = (low + high) >> 1;
