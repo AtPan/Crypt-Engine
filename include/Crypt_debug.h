@@ -24,27 +24,21 @@
 #ifndef __CRYPT_DEBUG_H
 #define __CRYPT_DEBUG_H
 
+/* Needed for common types and internal function definitions */
 #include <Crypt.h>
 #include <Crypt_utils/debug/memory_func.h>
 
+/* Location of Crypt's debugging log for the memory module */
 #define CRYPT_DEBUG_MEMORY_LOG_LOCATION "Crypt_Memory_Log.txt"
 
+/* Defines maximum amount of allocated pointers that can be tracked at once */
 #define CRYPT_DEBUG_MEMORY_TABLE_POINTER_SIZE 256
 
+/* Wrapper macros for memory module functions */
 #define Crypt_memory_malloc(n) __Crypt_debug_memory_malloc(n, __FILE__, __LINE__)
 #define Crypt_memory_realloc(p, n) __Crypt_debug_memory_realloc(p, n, __FILE__, __LINE__)
 #define Crypt_memory_free(p) __Crypt_debug_memory_free(p, __FILE__, __LINE__)
-
-/* Initializes debugging for the memory module.
- * If this function is not called, there will be no debugging information or support
- * available for the memory module.
- *
- * Crypt_memory_init must be called and return successfully before this function is called.
- *
- * Returns:
- * A flag marking whether debugging was successfully initialized for the memory module or not.
- * FAIL if Crypt_memory_init was not called, or returned an error. SUCCESS otherwise.
- */
-extern flag_t Crypt_debug_memory(void);
+#define Crypt_memory_init(n) __Crypt_debug_memory_init(n, __FILE__, __LINE__)
+#define Crypt_memory_quit() __Crypt_debug_memory_quit(__FILE__, __LINE__)
 
 #endif
