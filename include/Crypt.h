@@ -17,35 +17,20 @@
 #ifndef __CRYPT_H
 #define __CRYPT_H
 
-// --------------------------------
-/* Enumerated Types */
+// -------------------------------
+// Header Imports
 
-/* This type is meant to pass signals between functions.
- * The two most common flags are FAIL and SUCCESS.
- */
-typedef enum {
-    FAIL,
-    SUCCESS,
-} flag_t;
+/* Common Standard Library Imports */
+#include <stdio.h>
+#include <stddef.h>
+#include <stdint.h>
 
-/* This type is meant to tell the logger the severity of a message.
- */
-typedef enum {
-    LOG,
-    INFO,
-    WARNING,
-    ERROR,
-    FATAL,
-} log_level_t;
+/* Common Crypt Library Imports */
+#include <Crypt_types.h>
+#include <Crypt_log.h>
+#include <Crypt_memory.h>
 
-/* This type is meant to act as a basic boolean type.
- */
-typedef enum {
-    FALSE = 0,
-    TRUE = 1,
-} bool_t;
-
-/* End of Enumerated Types */
-// ----------------------------
+// End of Header Imports
+// -------------------------------
 
 #endif
