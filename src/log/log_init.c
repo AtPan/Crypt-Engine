@@ -17,15 +17,13 @@
  */
 
 #include <Crypt.h>
-#include <Crypt_log.h>
 #include <Crypt_utils/internal_log.h>
-#include <stdio.h>
 #include <time.h>
 
 flag_t Crypt_log_init(cryptlog_t * cl, const char * file_name) {
     /* TODO: Move to a main function */
-    freopen("/dev/null", "a+", stdout);
-    freopen("/dev/null", "a+", stderr);
+    //freopen("/dev/null", "a+", stdout);
+    //freopen("/dev/null", "a+", stderr);
 
     FILE * fh = fopen(file_name, "a");
 

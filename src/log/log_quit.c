@@ -14,9 +14,8 @@
  *  Copyright 2023 Anthony Panarello
  */
 
-#include <Crypt_log.h>
+#include <Crypt.h>
 #include <Crypt_utils/internal_log.h>
-#include <stdio.h>
 #include <time.h>
 
 void Crypt_log_quit(cryptlog_t * cl) {

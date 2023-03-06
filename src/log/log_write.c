@@ -8,15 +8,14 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License along with Crypt Engine.
+ *  You should have receemory_func.hived a copy of the GNU General Public License along with Crypt Engine.
  *  If not, see <https://www.gnu.org/licenses/>.
  *
  *  Copyright 2023 Anthony Panarello
  */
 
-#include <Crypt_log.h>
+#include <Crypt.h>
 #include <Crypt_utils/internal_log.h>
-#include <stdio.h>
 #include <stdarg.h>
 #include <time.h>
 
