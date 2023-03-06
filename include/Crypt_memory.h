@@ -17,12 +17,9 @@
 #ifndef __CRYPT_MEMORY_H
 #define __CRYPT_MEMORY_H
 
-/* Needed for common types like size_t and intptr_t */
-#include <stddef.h>
-#include <stdint.h>
-
 /* Needed for common enum types */
-#include "Crypt.h"
+#include <stddef.h>
+#include <Crypt_types.h>
 
 // -------------------------------------------------------------------------
 // Macros
@@ -81,7 +78,7 @@ extern void Crypt_memory_quit(void);
  * Returns:
  * NULL if there is not enough consecutive memory available or if @n is 0; a pointer to the block otherwise.
  */
-extern void * Crypt_memory_malloc(size_t);
+extern void * Crypt_memory_malloc(size_t n);
 
 /* Attempts to resize a pointer to a given size.
  * The passed pointer must be a pointer returned by Crypt_alloc or from a previous
@@ -102,7 +99,7 @@ extern void * Crypt_memory_malloc(size_t);
  * Returns:
  * The resized pointer. This will usually be the same as @p, but is not guaranteed to be, and the return value should be used instead.
  */
-extern void * Crypt_memory_realloc(void * restrict, size_t);
+extern void * Crypt_memory_realloc(void * restrict p, size_t n);
 
 /* Crypt's implementation of free.
  * Attempts to free a block of memory previously allocated to a user.
@@ -117,7 +114,7 @@ extern void * Crypt_memory_realloc(void * restrict, size_t);
  * Returns:
  * This function should always return SUCCESS. If ERROR is returned, report it as a bug.
  */
-extern flag_t Crypt_memory_free(void * restrict);
+extern flag_t Crypt_memory_free(void * restrict p);
 
 // End of Allocators
 // --------------------------------------------------------------------------

@@ -17,8 +17,7 @@
 #ifndef __CRYPT_LOG_H
 #define __CRYPT_LOG_H
 
-/* Needed for common types such as flag_t */
-#include "Crypt.h"
+#include <Crypt_types.h>
 
 typedef struct __Crypt_log_t cryptlog_t ;
 
