@@ -1,5 +1,5 @@
 .cache/
-bin/
+bin/*/*.so
 license_notice
 linked_command.txt
 main
