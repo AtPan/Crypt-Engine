@@ -26,3 +26,8 @@ Not much is present now, but I plan on including the following features at a min
 - Sound system
 - Physics engine
 - Allow full customization (change what key maps to what input, how the physics engine interacts with entities, etc.)
+
+# Notes
+
+When switching compilation from debug to release (or vice versa), you must run 'make clean'.
+If you do not, the object files will not be recompiled and you will end up with the same build but in a different location.
