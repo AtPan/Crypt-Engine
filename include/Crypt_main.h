@@ -14,24 +14,12 @@
  *  Copyright 2023 Anthony Panarello
  */
 
-#ifndef __CRYPT_H
-#define __CRYPT_H
+#ifndef __CRYPT_MAIN_H
+#define __CRYPT_MAIN_H
 
-// -------------------------------
-// Header Imports
-
-/* Common Standard Library Imports */
-#include <stdio.h>
-#include <stddef.h>
-#include <stdint.h>
-
-/* Common Crypt Library Imports */
-#include <Crypt_main.h>
-#include <Crypt_types.h>
-#include <Crypt_log.h>
-#include <Crypt_memory.h>
-
-// End of Header Imports
-// -------------------------------
+#ifdef main
+#undef main
+#endif
+#define main __Crypt_main
 
 #endif
