@@ -22,7 +22,6 @@
 #define __CRYPT_INTERNAL_LOG_H
 
 #include <stdio.h>
-#include "Crypt.h"
 
 struct __Crypt_log_t {
     FILE * fh;
