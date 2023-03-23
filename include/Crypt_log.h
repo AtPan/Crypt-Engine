@@ -18,8 +18,9 @@
 #define __CRYPT_LOG_H
 
 #include <Crypt_types.h>
+#include <Crypt_utils/internal_log.h>
 
-typedef struct __Crypt_log_t cryptlog_t ;
+typedef struct __Crypt_log_t cryptlog_t;
 
 // -------------------------------------------------------------------------
 // Initializers and Destructors
