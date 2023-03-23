@@ -16,6 +16,9 @@ RELEASE_DIR := $(BIN)/release
 DEBUG_DIR := $(BIN)/debug
 TARGET_DIR := $(BIN)
 
+DEBUG_LIBRARIES := ${DIRECTORIES:%=$(DEBUG_DIR)/libCrypt%.so}
+RELEASE_LIBRARIES := ${DIRECTORIES:%=$(RELEASE_DIR)/libCrypt%.so}
+
 SDL_FLAGS := `pkg-config --cflags --libs sdl2`
 
 .PHONY: debug_build release_build all clean build_flags clean_objs
@@ -42,21 +45,6 @@ $(DIRECTORIES): $$(filter $(SRC)/$$@/%.o, $(TARGETS_OBJS))
 	$(CC) $(CFLAGS) -o $@ $^ $(CFLAGS_LIBS) $(SDL_FLAGS)
 
 clean:
-	@for obj_file in $(TARGETS_OBJS) ; do \
-		if [ -f $$obj_file ] ; then \
-			rm $$obj_file ; \
-		fi; \
-	done;
-	@for so_file in $$(ls $(BIN)/*) ; do \
-		if [ -f $$so_file ] ; then \
-			rm $$so_file ; \
-		fi; \
-	done;
-	@rm -rf $(BIN)/*/*.so
-
-clean_objs:
-	@for obj_file in $(TARGETS_OBJS) ; do \
-		if [ -f $$obj_file ] ; then \
-			rm $$obj_file ; \
-		fi; \
-	done;
+	@rm -f $(TARGETS_OBJS)
+	@rm -f $(RELEASE_LIBRARIES)
+	@rm -f $(DEBUG_LIBRARIES)
