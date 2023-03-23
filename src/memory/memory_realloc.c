@@ -14,7 +14,7 @@
  *  Copyright 2023 Anthony Panarello
  */
 
-#include <Crypt_memory.h>
+#include <Crypt.h>
 #include <Crypt_utils/internal_memory.h>
 #include <string.h>
 

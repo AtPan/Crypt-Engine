@@ -15,11 +15,10 @@
  */
 
 #include <Crypt.h>
-#include <Crypt_memory.h>
+#include <Crypt_types.h>
 #include <Crypt_debug.h>
 #include <Crypt_utils/debug/memory_func.h>
 #include <Crypt_utils/internal_resources.h>
-#include <Crypt_log.h>
 #include <Crypt_utils/internal_log.h>
 
 #undef Crypt_memory_malloc

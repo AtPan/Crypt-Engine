@@ -14,10 +14,10 @@
  *  Copyright 2023 Anthony Panarello
  */
 
-#include <stdlib.h>
-#include <Crypt_memory.h>
+#include <Crypt.h>
 #include <Crypt_utils/internal_memory.h>
 #include <Crypt_utils/internal_resources.h>
+#include <stdlib.h>
 
 extern struct __memory __memory_buf;
 
