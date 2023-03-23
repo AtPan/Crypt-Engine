@@ -28,4 +28,7 @@ void Crypt_log_quit(cryptlog_t * cl) {
 
     fflush(cl->fh);
     fclose(cl->fh);
+
+    cl->fh = NULL;
+    cl->name = NULL;
 }
