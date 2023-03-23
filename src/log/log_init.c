@@ -21,10 +21,6 @@
 #include <time.h>
 
 flag_t Crypt_log_init(cryptlog_t * cl, const char * file_name) {
-    /* TODO: Move to a main function */
-    //freopen("/dev/null", "a+", stdout);
-    //freopen("/dev/null", "a+", stderr);
-
     FILE * fh = fopen(file_name, "a");
 
     if (fh == NULL) {
