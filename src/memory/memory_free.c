@@ -18,14 +18,14 @@
 #include <Crypt_memory.h>
 #include <Crypt_utils/internal_memory.h>
 
-extern struct __memory __memory_buf;
+extern struct __memory __Crypt_memory_buf;
 
 flag_t Crypt_memory_free(void * restrict ptr) {
     intptr_t addr = (intptr_t)ptr;
-    struct __memory_block * block = (struct __memory_block *)__memory_buf.buf;
+    struct __memory_block * block = (struct __memory_block *)__Crypt_memory_buf.buf;
     struct __memory_block * parent = block;
 
-    if(ptr == NULL || addr < (intptr_t)__memory_buf.buf || addr > (intptr_t)__memory_buf.buf + __memory_buf.allocated) {
+    if(ptr == NULL || addr < (intptr_t)__Crypt_memory_buf.buf || addr > (intptr_t)__Crypt_memory_buf.buf + __Crypt_memory_buf.allocated) {
         return FAIL;
     }
 
@@ -38,7 +38,7 @@ flag_t Crypt_memory_free(void * restrict ptr) {
 
     parent->is_allocated = FALSE;
 
-    __memory_buf.size -= parent->block_size;
+    __Crypt_memory_buf.size -= parent->block_size;
 
     if(block != NULL && block->is_allocated == FALSE) {
         parent->block_size += block->block_size;

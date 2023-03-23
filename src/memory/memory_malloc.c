@@ -17,7 +17,7 @@
 #include <Crypt.h>
 #include <Crypt_utils/internal_memory.h>
 
-extern struct __memory __memory_buf;
+extern struct __memory __Crypt_memory_buf;
 
 void * Crypt_memory_malloc(size_t n) {
     void * __Crypt_memory_malloc(size_t);
@@ -25,7 +25,7 @@ void * Crypt_memory_malloc(size_t n) {
 
     n = __CRYPT_MEMORY_ROUND_TO_NEXT_BLOCK(n + sizeof(struct __memory_block));
 
-    if(n > __memory_buf.allocated - __memory_buf.size) {
+    if(n > __Crypt_memory_buf.allocated - __Crypt_memory_buf.size) {
         /* TODO: Expand allocated buffer
          */
 
@@ -53,7 +53,7 @@ void * Crypt_memory_malloc(size_t n) {
  * Returns: NULL on error, otherwise a pointer to allocated memory.
  */
 void * __Crypt_memory_malloc(size_t n) {
-    struct __memory_block * block = (struct __memory_block *)__memory_buf.buf;
+    struct __memory_block * block = (struct __memory_block *)__Crypt_memory_buf.buf;
 
     while(block != NULL && (block->is_allocated == TRUE || block->block_size < n)) {
         block = block->next;
@@ -73,7 +73,7 @@ void * __Crypt_memory_malloc(size_t n) {
         block->next = new_block;
     }
 
-    __memory_buf.size += n;
+    __Crypt_memory_buf.size += n;
 
     return (void *)((intptr_t)block + sizeof(struct __memory_block));
 }

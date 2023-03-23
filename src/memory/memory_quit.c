@@ -19,14 +19,14 @@
 #include <Crypt_utils/internal_resources.h>
 #include <stdlib.h>
 
-extern struct __memory __memory_buf;
+extern struct __memory __Crypt_memory_buf;
 
 void Crypt_memory_quit() {
-    if(__memory_buf.buf == NULL) return;
+    if(__Crypt_memory_buf.buf == NULL) return;
 
-    free(__memory_buf.buf);
-    __memory_buf.buf = NULL;
-    __memory_buf.allocated = __memory_buf.size = 0;
+    free(__Crypt_memory_buf.buf);
+    __Crypt_memory_buf.buf = NULL;
+    __Crypt_memory_buf.allocated = __Crypt_memory_buf.size = 0;
 
     __Crypt_resources_remove_resource(__Crypt_resource_type_memory);
 }

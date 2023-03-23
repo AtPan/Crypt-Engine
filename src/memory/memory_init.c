@@ -19,7 +19,7 @@
 #include <Crypt_utils/internal_resources.h>
 #include <stdlib.h>
 
-struct __memory __memory_buf;
+struct __memory __Crypt_memory_buf;
 
 flag_t Crypt_memory_init(size_t n) {
     if(n == 0) {
@@ -27,10 +27,10 @@ flag_t Crypt_memory_init(size_t n) {
     }
     n = __CRYPT_MEMORY_ROUND_TO_NEXT_BLOCK(n);
 
-    __memory_buf.size = __memory_buf.allocated = 0;
-    __memory_buf.buf = malloc(n);
+    __Crypt_memory_buf.size = __Crypt_memory_buf.allocated = 0;
+    __Crypt_memory_buf.buf = malloc(n);
 
-    if(__memory_buf.buf == NULL) {
+    if(__Crypt_memory_buf.buf == NULL) {
         /* TODO: Add error checking and handeling.
          * Keep it similar to C's errno for simplicity.
          */
@@ -45,18 +45,18 @@ flag_t Crypt_memory_init(size_t n) {
          * Keep it similar to C's errno for simplicity.
          */
 
-        free(__memory_buf.buf);
-        __memory_buf.buf = NULL;
+        free(__Crypt_memory_buf.buf);
+        __Crypt_memory_buf.buf = NULL;
         return FAIL;
     }
 
-    __memory_buf.allocated = n;
-    struct __memory_block * head = (struct __memory_block *)__memory_buf.buf;
+    __Crypt_memory_buf.allocated = n;
+    struct __memory_block * head = (struct __memory_block *)__Crypt_memory_buf.buf;
     head->block_size = n;
     head->is_allocated = FALSE;
     head->next = NULL;
 
-    __Crypt_resources_add_resource(__Crypt_resource_type_memory, (void *)__memory_buf.buf);
+    __Crypt_resources_add_resource(__Crypt_resource_type_memory, (void *)__Crypt_memory_buf.buf);
 
     return SUCCESS;
 }

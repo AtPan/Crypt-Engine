@@ -18,7 +18,7 @@
 #include <Crypt_utils/internal_memory.h>
 #include <string.h>
 
-extern struct __memory __memory_buf;
+extern struct __memory __Crypt_memory_buf;
 
 /* Attempts to resize a pointer to a given size.
  * The passed pointer must be a pointer returned by Crypt_alloc or from a previous
@@ -41,13 +41,13 @@ void * Crypt_memory_realloc(void * restrict old_ptr, size_t n) {
     /* If old_ptr is null, allocate a new pointer */
     if(old_ptr == NULL) return Crypt_memory_malloc(n);
     /* If old_ptr lies outside of the pool's range, it's not our pointer so return null */
-    if((intptr_t)old_ptr < (intptr_t)__memory_buf.buf || (intptr_t)old_ptr > (intptr_t)__memory_buf.buf + __memory_buf.size) return NULL;
+    if((intptr_t)old_ptr < (intptr_t)__Crypt_memory_buf.buf || (intptr_t)old_ptr > (intptr_t)__Crypt_memory_buf.buf + __Crypt_memory_buf.size) return NULL;
 
     /* Round n to next block size */
     n = __CRYPT_MEMORY_ROUND_TO_NEXT_BLOCK(n + sizeof(struct __memory_block));
 
     /* Find the block old_ptr belongs to */
-    struct __memory_block * block = (struct __memory_block *)__memory_buf.buf;
+    struct __memory_block * block = (struct __memory_block *)__Crypt_memory_buf.buf;
     struct __memory_block * old_block = block;
     while(block != NULL && (intptr_t)old_ptr > (intptr_t)block) {
         old_block = block;
@@ -61,14 +61,14 @@ void * Crypt_memory_realloc(void * restrict old_ptr, size_t n) {
     }
 
     /* If there is not enough room for reallocation, set error and return null */
-    if(__memory_buf.allocated - __memory_buf.size + old_block->block_size < n) {
+    if(__Crypt_memory_buf.allocated - __Crypt_memory_buf.size + old_block->block_size < n) {
         /* TODO: Set error */
 
         return NULL;
     }
 
     /* Update master memory structure accordingly */
-    __memory_buf.size += n - old_block->block_size;
+    __Crypt_memory_buf.size += n - old_block->block_size;
 
     /* If the same size should be allocated, do nothing */
     if(old_block->block_size == n) return old_ptr;

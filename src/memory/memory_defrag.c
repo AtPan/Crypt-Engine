@@ -17,10 +17,10 @@
 #include <Crypt_memory.h>
 #include <Crypt_utils/internal_memory.h>
 
-extern struct __memory __memory_buf;
+extern struct __memory __Crypt_memory_buf;
 
 void Crypt_memory_defrag() {
-    struct __memory_block * block = (struct __memory_block *)__memory_buf.buf;
+    struct __memory_block * block = (struct __memory_block *)__Crypt_memory_buf.buf;
 
     while(block->next != NULL) {
         while(block->next != NULL && block->is_allocated == TRUE) block = block->next;
