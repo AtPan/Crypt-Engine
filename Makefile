@@ -16,8 +16,8 @@ RELEASE_DIR := $(BIN)/release
 DEBUG_DIR := $(BIN)/debug
 TARGET_DIR := $(BIN)
 
-DEBUG_LIBRARIES := ${DIRECTORIES:%=$(DEBUG_DIR)/libCrypt%.so}
-RELEASE_LIBRARIES := ${DIRECTORIES:%=$(RELEASE_DIR)/libCrypt%.so}
+DEBUG_LIBRARIES := ${DIRECTORIES:%=$(DEBUG_DIR)/libCrpt%.so}
+RELEASE_LIBRARIES := ${DIRECTORIES:%=$(RELEASE_DIR)/libCrpt%.so}
 
 SDL_FLAGS := `pkg-config --cflags --libs sdl2`
 
