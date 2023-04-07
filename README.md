@@ -31,3 +31,11 @@ Not much is present now, but I plan on including the following features at a min
 
 When switching compilation from debug to release (or vice versa), you must run 'make clean'.
 If you do not, the object files will not be recompiled and you will end up with the same build but in a different location.
+
+--
+
+# Build Environment
+
+This project is built on Ubuntu 18.04 LTS and written in C99.  
+The compiler I used is GCC version 8.4.0  
+My make is running version 4.1  
