@@ -14,27 +14,14 @@
  *  Copyright 2023 Anthony Panarello
  */
 
-#ifndef __CRYPT_RENDERER_H
-#define __CRYPT_RENDERER_H
+#include <Crypt_renderer.h>
 
-#include <Crypt_types.h>
-#define SDL_MAIN_HANDLED
-#include <SDL.h>
+Crypt_2DWindow_t * Crypt_main_window = NULL;
 
-typedef SDL_Window Crypt_2DWindow_t;
+flag_t Crypt_2D_renderer_init() {
+    if(SDL_Init(SDL_INIT_VIDEO) < 0) {
+        return FAIL;
+    }
 
-typedef struct __Crypt_2DWindow_opts_t {
-    const char * name;
-    unsigned int x;
-    unsigned int y;
-    unsigned int w;
-    unsigned int h;
-    uint32_t flags;
-} Crypt_2DWindow_opts_t;
-
-extern Crypt_2DWindow_t * Crypt_main_window;
-
-flag_t Crypt_2D_renderer_init(void);
-flag_t Crypt_2D_renderer_create_window(Crypt_2DWindow_t ** restrict, Crypt_2DWindow_opts_t);
-
-#endif
+    return SUCCESS;
+}
