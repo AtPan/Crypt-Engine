@@ -23,6 +23,9 @@ flag_t Crypt_2D_renderer_create_window(Crypt_2DWindow_t ** restrict window, Cryp
             window_opts.x, window_opts.y, window_opts.w, window_opts.h, window_opts.flags);
 
     if((*window = l_window) == NULL) {
+        Crypt_log_write(__Crypt_2D_renderer_log,
+                "ERROR: Could not open 2D rendering window\nError Message: %s\n",
+                SDL_GetError());
         return FAIL;
     }
 
