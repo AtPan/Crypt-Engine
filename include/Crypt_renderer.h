@@ -18,10 +18,14 @@
 #define __CRYPT_RENDERER_H
 
 #include <Crypt_types.h>
+#include <Crypt_log.h>
 #define SDL_MAIN_HANDLED
 #include <SDL.h>
+#include <SDL_error.h>
 
 typedef SDL_Window Crypt_2DWindow_t;
+
+extern cryptlog_t * __Crypt_2D_renderer_log;
 
 typedef struct __Crypt_2DWindow_opts_t {
     const char * name;
@@ -31,8 +35,6 @@ typedef struct __Crypt_2DWindow_opts_t {
     unsigned int h;
     uint32_t flags;
 } Crypt_2DWindow_opts_t;
-
-extern Crypt_2DWindow_t * Crypt_main_window;
 
 flag_t Crypt_2D_renderer_init(void);
 flag_t Crypt_2D_renderer_create_window(Crypt_2DWindow_t ** restrict, Crypt_2DWindow_opts_t);
