@@ -14,14 +14,29 @@
  *  Copyright 2023 Anthony Panarello
  */
 
+#include <SDL_error.h>
+#include <SDL.h>
 #include <Crypt_renderer.h>
 
 Crypt_2DWindow_t * Crypt_main_window = NULL;
+cryptlog_t * __Crypt_2D_renderer_log = NULL;
 
 flag_t Crypt_2D_renderer_init() {
-    if(SDL_Init(SDL_INIT_VIDEO) < 0) {
+    if(Crypt_log_init(__Crypt_2D_renderer_log, "Crypt_renderer.txt") == FAIL) {
         return FAIL;
     }
+
+    int e_code;
+    if((e_code = SDL_Init(SDL_INIT_VIDEO)) < 0) {
+        Crypt_log_write(__Crypt_2D_renderer_log,
+                "FATAL: Error initializing SDL_VIDEO subsystem.\nError Code: %d\nError Message: %s\n",
+                e_code, SDL_GetError());
+
+        Crypt_log_quit(__Crypt_2D_renderer_log);
+        return FAIL;
+    }
+
+    Crypt_log_write(__Crypt_2D_renderer_log, "Successfully initialized SDL_VIDEO subsystem.\n");
 
     return SUCCESS;
 }
