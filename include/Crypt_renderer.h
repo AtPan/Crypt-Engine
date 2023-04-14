@@ -19,11 +19,10 @@
 
 #include <Crypt_types.h>
 #include <Crypt_log.h>
+#include <Crypt_utils/internal_renderer.h>
 #define SDL_MAIN_HANDLED
 #include <SDL.h>
 #include <SDL_error.h>
-
-typedef SDL_Window Crypt_2DWindow_t;
 
 extern cryptlog_t * __Crypt_2D_renderer_log;
 
@@ -33,10 +32,15 @@ typedef struct __Crypt_2DWindow_opts_t {
     unsigned int y;
     unsigned int w;
     unsigned int h;
-    uint32_t flags;
+    uint32_t sdl_window_flags;
+    Crypt_rgba_color_t default_color;
 } Crypt_2DWindow_opts_t;
 
 flag_t Crypt_2D_renderer_init(void);
-flag_t Crypt_2D_renderer_create_window(Crypt_2DWindow_t ** restrict, Crypt_2DWindow_opts_t);
+flag_t Crypt_2D_renderer_create_window(Crypt_2DWindow_t * restrict, Crypt_2DWindow_opts_t);
+void Crypt_2D_renderer_destroy_window(Crypt_2DWindow_t * restrict);
+
+SDL_Window * Crypt_2D_renderer_extract_window(Crypt_2DWindow_t * restrict);
+SDL_Renderer * Crypt_2D_renderer_extract_renderer(Crypt_2DWindow_t * restrict);
 
 #endif
