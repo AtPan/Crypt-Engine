@@ -1,4 +1,7 @@
 .cache/
+log/
+main.c
+main
 bin/*/*.so
 license_notice
 linked_command.txt
