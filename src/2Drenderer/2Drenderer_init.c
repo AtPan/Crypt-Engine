@@ -14,15 +14,13 @@
  *  Copyright 2023 Anthony Panarello
  */
 
-#include <SDL_error.h>
-#include <SDL.h>
 #include <Crypt_renderer.h>
 
-Crypt_2DWindow_t * Crypt_main_window = NULL;
-cryptlog_t * __Crypt_2D_renderer_log = NULL;
+//Crypt_2DWindow_t * Crypt_main_window = NULL;
+cryptlog_t * restrict __Crypt_2D_renderer_log = NULL;
 
-flag_t Crypt_2D_renderer_init() {
-    if(Crypt_log_init(__Crypt_2D_renderer_log, "Crypt_renderer.txt") == FAIL) {
+flag_t Crypt_2D_renderer_init(cryptlog_t * restrict log) {
+    if(log != NULL && Crypt_log_init((__Crypt_2D_renderer_log = log), "log/Crypt_renderer.txt") == FAIL) {
         return FAIL;
     }
 
@@ -33,6 +31,7 @@ flag_t Crypt_2D_renderer_init() {
                 e_code, SDL_GetError());
 
         Crypt_log_quit(__Crypt_2D_renderer_log);
+        __Crypt_2D_renderer_log = NULL;
         return FAIL;
     }
 
