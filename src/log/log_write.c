@@ -20,6 +20,8 @@
 #include <time.h>
 
 void Crypt_log_write(cryptlog_t * cl, const char * restrict fmt, ...) {
+    if(cl == NULL) return;
+
     va_list args;
     va_start(args, fmt);
 

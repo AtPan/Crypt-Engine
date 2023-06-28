@@ -29,7 +29,7 @@
 #include <Crypt_utils/debug/memory_func.h>
 
 /* Location of Crypt's debugging log for the memory module */
-#define CRYPT_DEBUG_MEMORY_LOG_LOCATION "Crypt_Memory_Log.txt"
+#define CRYPT_DEBUG_MEMORY_LOG_LOCATION "log/Crypt_Memory_Log.txt"
 
 /* Defines maximum amount of allocated pointers that can be tracked at once */
 #define CRYPT_DEBUG_MEMORY_TABLE_POINTER_SIZE 256
