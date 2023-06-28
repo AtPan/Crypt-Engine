@@ -14,6 +14,7 @@
  *  Copyright 2023 Anthony Panarello
  */
 
+#include <strings.h>
 #ifndef __CRYPT_RENDERER_H
 #error "Do not include this file directly; include <Crypt_renderer.h>"
 #endif
@@ -48,6 +49,12 @@ typedef union {
     unsigned int rgba;
 } Crypt_rgba_color_t;
 
+typedef enum {
+    CRYPT_2DIMAGE_TYPE_BMP,
+    CRYPT_2DIMAGE_TYPE_JPG,
+    CRYPT_2DIMAGE_TYPE_PNG,
+} Crypt_2DImage_type_t;
+
 typedef struct __Crypt_2DWindow_t {
     SDL_Window * window;
     SDL_Renderer * renderer;
@@ -57,6 +64,12 @@ typedef struct __Crypt_2DWindow_t {
 
 typedef struct __Crypt_2DSurface_t {
     SDL_Surface * surface;
+    SDL_Rect * rect;
 } Crypt_2DSurface_t;
+
+typedef struct __Crypt_2DImage_t {
+    SDL_Surface * surface;
+    Crypt_2DImage_type_t image_type;
+} Crypt_2DImage_t;
 
 #endif
