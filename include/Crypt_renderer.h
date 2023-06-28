@@ -24,7 +24,7 @@
 #include <SDL.h>
 #include <SDL_error.h>
 
-extern cryptlog_t * __Crypt_2D_renderer_log;
+extern cryptlog_t * restrict __Crypt_2D_renderer_log;
 
 typedef struct __Crypt_2DWindow_opts_t {
     const char * name;
@@ -36,9 +36,13 @@ typedef struct __Crypt_2DWindow_opts_t {
     Crypt_rgba_color_t default_color;
 } Crypt_2DWindow_opts_t;
 
-flag_t Crypt_2D_renderer_init(void);
+flag_t Crypt_2D_renderer_init(cryptlog_t * restrict);
+void Crypt_2D_renderer_quit(void);
 flag_t Crypt_2D_renderer_create_window(Crypt_2DWindow_t * restrict, Crypt_2DWindow_opts_t);
 void Crypt_2D_renderer_destroy_window(Crypt_2DWindow_t * restrict);
+
+flag_t Crypt_2D_renderer_draw_surface(Crypt_2DWindow_t * restrict, Crypt_2DSurface_t * restrict, unsigned int, unsigned int);
+flag_t Crypt_2D_renderer_create_surface(Crypt_2DSurface_t * restrict, unsigned int, unsigned int);
 
 SDL_Window * Crypt_2D_renderer_extract_window(Crypt_2DWindow_t * restrict);
 SDL_Renderer * Crypt_2D_renderer_extract_renderer(Crypt_2DWindow_t * restrict);
