@@ -18,4 +18,5 @@
 
 void Crypt_3D_quit() {
     SDL_Quit();
+    IMG_Quit();
 }
