@@ -37,6 +37,7 @@ Crypt_3D_window_t * Crypt_3D_create_window(Crypt_3D_window_t * restrict window,
     window->width = flags.window_width;
     window->height = flags.window_height;
     window->sdl_renderer = sdl_renderer;
+    window->sdl_surface = SDL_GetWindowSurface(sdl_window);
 
     window->camera = camera;
     window->camera->camera_angle = 0.0;
