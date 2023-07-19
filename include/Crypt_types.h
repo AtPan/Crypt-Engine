@@ -45,6 +45,17 @@ typedef enum {
     TRUE = 1,
 } bool_t;
 
+typedef struct __vector2_t {
+    double x;
+    double y;
+} vector2_t;
+
+typedef struct __vector3_t {
+    double x;
+    double y;
+    double z;
+} vector3_t;
+
 /* End of Enumerated Types */
 // ----------------------------
 
