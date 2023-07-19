@@ -39,3 +39,8 @@ If you do not, the object files will not be recompiled and you will end up with 
 This project is built on Ubuntu 18.04 LTS and written in C99.  
 The compiler I used is GCC version 8.4.0  
 My make is running version 4.1  
+
+# Requirements
+
+The only external libraries in use are SDL2 (version >= 2.0.18 required) and SDL2 Image.  
+Without these libraries, this engine will not work. Make sure to have them installed on your system.
