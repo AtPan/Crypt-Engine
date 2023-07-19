@@ -30,6 +30,7 @@ struct __Crypt_3D_window_t {
     unsigned int height;
     SDL_Window * sdl_window;
     SDL_Renderer * sdl_renderer;
+    SDL_Surface * sdl_surface;
     struct __Crypt_3D_camera_t * camera;
 };
 struct __Crypt_3D_camera_t {
@@ -38,6 +39,10 @@ struct __Crypt_3D_camera_t {
     float camera_angle;
     vector3_t camera_position;
     float camera_aspect_ratio;
+    float camera_render_distance;
+};
+struct __Crypt_3D_object_t {
+    SDL_Surface * object_surface;
 };
 
 #endif
