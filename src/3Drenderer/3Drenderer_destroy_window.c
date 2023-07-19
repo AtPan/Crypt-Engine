@@ -25,4 +25,5 @@ void Crypt_3D_destroy_window(Crypt_3D_window_t * restrict window) {
     SDL_DestroyRenderer(window->sdl_renderer);
     SDL_DestroyWindow(window->sdl_window);
     window->sdl_window = NULL;
+    window->sdl_surface = NULL;
 }
