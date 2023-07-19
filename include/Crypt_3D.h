@@ -23,11 +23,18 @@
 #define SDL_MAIN_HANDLED
 #include <SDL.h>
 #include <SDL_video.h>
+#include <SDL2/SDL_image.h>
 
 #define CRYPT_3D_RENDERER_LOG_PATH "log/3D_rendering.txt"
 
+/* How long the screen is, in world units. This is done to keep scaling correct across different resolutions.
+ * Screen height can be computed using the aspect ratio of the camera rendering the scene.
+ */
+#define SCREEN_LENGTH_IN_WORLD_UNITS 20.0
+
 typedef struct __Crypt_3D_camera_t Crypt_3D_camera_t;
 typedef struct __Crypt_3D_window_t Crypt_3D_window_t;
+typedef struct __Crypt_3D_object_t Crypt_3D_object_t;
 
 typedef struct {
     const char * restrict window_title;
@@ -40,7 +47,7 @@ typedef struct {
 extern cryptlog_t * restrict __Crypt_3D_renderer_log;
 
 extern flag_t Crypt_3D_init(void);
-extern Crypt_3D_camera_t * Crypt_3D_create_camera(Crypt_3D_camera_t * restrict, float focal_length, float camera_angle_width);
+extern Crypt_3D_camera_t * Crypt_3D_init_camera(Crypt_3D_camera_t * restrict, float focal_length, float camera_angle_width, float camera_render_distance);
 extern Crypt_3D_window_t * Crypt_3D_create_window(Crypt_3D_window_t * restrict, Crypt_3D_camera_t * restrict, Crypt_3D_window_flags_t);
 extern void Crypt_3D_destroy_window(Crypt_3D_window_t * restrict);
 extern void Crypt_3D_quit(void);
