@@ -17,11 +17,12 @@
 #include <Crypt_3D.h>
 #include <Crypt_utils/3Drenderer/internal_type.h>
 
-Crypt_3D_camera_t * Crypt_3D_create_camera(Crypt_3D_camera_t * restrict camera, float focal_length, float camera_angle_width) {
+Crypt_3D_camera_t * Crypt_3D_init_camera(Crypt_3D_camera_t * restrict camera, float focal_length, float camera_angle_width, float camera_render_distance) {
     if(camera == NULL) return NULL;
 
     camera->focal_length = focal_length;
     camera->camera_angle_width = camera_angle_width;
+    camera->camera_render_distance = camera_render_distance;
 
     return camera;
 }
