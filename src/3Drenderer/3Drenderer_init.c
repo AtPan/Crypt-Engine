@@ -23,5 +23,10 @@ flag_t Crypt_3D_init() {
         return FAIL;
     }
 
+    int img_flags = IMG_INIT_JPG | IMG_INIT_PNG;
+    if(IMG_Init(img_flags) != img_flags) {
+        return FAIL;
+    }
+
     return SUCCESS;
 }
